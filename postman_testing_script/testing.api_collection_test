@@ -1,0 +1,638 @@
+{
+	"info": {
+		"_postman_id": "797fcfd3-3dcc-4bea-9e6c-b4e3fdd73e57",
+		"name": "testing",
+		"description": "api testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/api/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e09cf3a0-47d1-4c0a-b4d0-937402246405",
+						"exec": [
+							"",
+							"pm.test(\"token successfully sent\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.tokenSuccessfullySent).to.eql(true);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"let token = jsonData.token;",
+							"pm.environment.set('accessToken', token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user123",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "post /api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0a6aa39-a057-4f8d-8b39-b91fc6d2c5bc",
+						"exec": [
+							"pm.test(\"Get users\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.eql(\"user123\");",
+							"    pm.expect(jsonData[1]).to.eql(\"user321\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "GET /api/user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "473b7df6-c450-4106-a033-a0bdcf273ef5",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "abc",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "Filip",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Kovacevic",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				},
+				"description": "POST on api/user/"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "226d279c-61cf-46e0-ad1a-317b6599ff30",
+						"exec": [
+							"pm.test(\"Fetched correct user\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.eql(\"user321\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user123",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"2"
+					]
+				},
+				"description": "get api/user/:id"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "455eb684-707d-4c5b-9364-a034747fa5ed",
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "newPassword",
+							"value": "abc",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "firstName",
+							"value": "Filip",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Kovacevic",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"2"
+					]
+				},
+				"description": "PUT api/user/:id"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f00a98d-a9f0-41d8-afc9-546b1319318a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user123",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"2"
+					]
+				},
+				"description": "delete api/user/:id"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/stories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e984e7ae-f1f9-4015-8f72-60f8a0c4c162",
+						"exec": [
+							"pm.test(\"Get all story titles\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/stories",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"stories"
+					]
+				},
+				"description": "GET api/biographies"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/user/2/stories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2676299c-6249-4264-8c4f-1eef3a7cf6d2",
+						"exec": [
+							"pm.test(\"Get stories from a specific user\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user123",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "firstName",
+							"value": "Filip",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Kovacevic",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/2/stories",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"2",
+						"stories"
+					]
+				},
+				"description": "GET /api/user/:id/stories"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/stories/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e48e0931-fc74-48d9-bd34-ecb1dad8cddb",
+						"exec": [
+							"pm.test(\"Successful PUT request to stories\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "newType",
+							"value": "asddddddddddasd",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Zagreb boy",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/stories/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"stories",
+						"2"
+					]
+				},
+				"description": "PUT 3000/api/stories/:id"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/stories/2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92dd1f48-86c4-4a91-a6fc-0cafb170a516",
+						"exec": [
+							"pm.test(\"Successfully deleted story\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/api/stories/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"stories",
+						"2"
+					]
+				},
+				"description": "DELETE api/stories/2"
+			},
+			"response": []
+		}
+	]
+}
